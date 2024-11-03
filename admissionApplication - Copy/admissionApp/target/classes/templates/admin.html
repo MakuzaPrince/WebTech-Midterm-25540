@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Admin Dashboard</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f6f7f8;
+    }
+
+    /* Topbar Styles */
+    .topbar {
+      background-color: #b6c8d3;
+      color: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(238, 100, 100, 0.1);
+    }
+
+    .topbar .logo {
+      width: 60px;
+      height: auto;
+    }
+
+    .topbar a,
+    .topbar button {
+      color: inherit;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .topbar a:hover,
+    .topbar button:hover {
+      background-color: #5996d4;
+    }
+
+    /* Content Styles */
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    /* Notification Dropdown Styles */
+    .notification-dropdown {
+      position: absolute;
+      right: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      width: 300px;
+      display: none;
+    }
+
+    .dropdown-toggle {
+        background-color: #eed27f;
+        color: #000;
+        border: 1px solid #e9e8e5;
+    }
+    .notification-dropdown h6 {
+      margin-bottom: 10px;
+    }
+    
+    header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    .notification-count {
+      background-color: #dc3545;
+      color: #fff;
+      padding: 2px 5px;
+      border-radius: 50%;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+
+    /* Table Styles */
+    .user-table {
+      width: 100%;
+    }
+
+    .user-table thead th {
+      text-align: left;
+    }
+    .form-control {
+      text-align: center;
+    }
+    .form-inline {
+      display: flex;
+      align-items: center;
+      width: 300px; /* Adjust width as needed */
+    }
+
+    .form-control {
+      width: 100%; /* Make the input field fill the available space */
+      max-width: 200px; /* Optional: Set a maximum width if needed */
+      padding: 5px; /* Adjust padding for a smaller appearance */
+      font-size: 14px; /* Adjust font size for a more compact look */
+      border: 1px solid #ccc; /* Adjust border thickness for a subtler look */
+    }
+
+    .btn-primary {
+      padding: 5px 10px; /* Adjust padding for a smaller button size */
+      font-size: 14px; /* Adjust font size for a more compact feel */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="d-flex">
+      <a th:href="@{/admin/add}" class="btn btn-primary me-2">Add New User</a>
+      <a th:href="@{/admin/search}" class="btn btn-primary me-2">Search User</a>
+      <a th:href="@{/admin/download/users}" class="btn btn-success me-2">Download Data</a>
+      <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Notifications <span id="notification-count" class="notification-count">0</span>
+        </button>
+        <ul class="dropdown-menu notification-dropdown" aria-labelledby="dropdownMenuButton1">
+          <h6>Notifications</h6>
+          <div id="notification-list"></div>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <header class="d-flex justify-content-between align-items-center py-2">
+      <h3>Manage Users</h3>
+      <a th:href="@{/logout}" class="btn btn-danger ms-auto">Logout</a>
+    </header>
+    <hr>
+    <div class="form-inline ms-auto">
+        <label for="searchTerm" class="mr-2">Search:</label>
+        <input type="text" class="form-control mr-2" id="searchTerm" placeholder="Username or Email">
+        <button type="button" class="btn btn-primary" onclick="filterUsers()">Filter</button>
+      </div>
+    <div class="container mt-4">
+      <table class="table table-bordered table-striped user-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.role}"></td>
+            <td>
+              <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-warning btn-sm">Edit</a>
+              <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      let users = []; // Assume this variable is populated with user data from the server
+
+      function filterUsers() {
+        const searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+        const filteredUsers = users.filter(user => {
+          const username = user.username.toLowerCase();
+          const email = user.email.toLowerCase();
+          return username.includes(searchTerm) || email.includes(searchTerm);
+        });
+
+        const userTableBody = document.getElementById("userTableBody");
+        userTableBody.innerHTML = ""; // Clear existing rows
+
+        filteredUsers.forEach(user => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${user.username}</td>
+            <td>${user.firstName}</td>
+            <td>${user.lastName}</td>
+            <td>${user.email}</td>
+            <td>${user.phoneNumber}</td>
+            <td>${user.role}</td>
+            <td>
+              <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-warning btn-sm">Edit</a>
+              <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          `;
+          userTableBody.appendChild(row);
+        });
+      }
+
+      // Call filterUsers() initially to display all users
+      filterUsers();
+    </script>
+  </div>
+</body>
+</html> 
+

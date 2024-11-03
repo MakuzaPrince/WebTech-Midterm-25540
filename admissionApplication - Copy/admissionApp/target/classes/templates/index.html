@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Web</title>
+    <link rel="stylesheet" th:href="@{./website.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,600;0,700;1,200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<section class="header">
+    <nav>
+        <a th:href="@{/home}"><img th:src="@{./logo.png}" class="logo" alt="Logo"></a>
+        <div class="nav-links">
+            <ul>
+                <li><a th:href="@{/register}" class="hero-btn"><span>SignUp</span></a></li>
+                <li><a th:href="@{/login}" class="hero-btn"><span>Login</span></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="text-box">
+        <h1>Mentoring School for the future</h1>
+        <p>Education is our passport to the future.</p>
+
+        <a th:href="@{/login}" class="hero-btn"><span>Visit us for more</span></a>
+    </div>
+</section>
+
+<section class="footer">
+    <div class="icons">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-snapchat"></i></a>
+        <a href="#"><i class="fa fa-github"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+    </div>
+</section>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+<h1>Welcome to the Home Page</h1>
+<p>Please choose an option below:</p>
+
+
+<p>login <a th:href="@{/login}">click here to login</a>.</p>
+<p>register <a th:href="@{/register}">click here to register</a>.</p>
+</body>
+</html> -->

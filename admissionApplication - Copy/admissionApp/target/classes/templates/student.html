@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Student Admission Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #bac6d4;
+        }
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #e2f7f7;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-danger{
+        position: absolute;
+        top: 40px;
+        right: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="h1">Student Dashboard</h1>
+
+        <p><a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+        
+          <div class="row"> 
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Personal Information
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> Prince Mak</p>
+                        <p><strong>Email:</strong> mprincehonore@example.com</p>
+                        <p><strong>Phone Number:</strong> 0788 456 789</p>
+                        <p><strong>Role:</strong> Student</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Academic Information
+                    </div>
+                    <div class="card-body">
+                        <p><strong>1st Grade Percentage:</strong> 90%</p>
+                        <p><strong>2nd Grade Percentage:</strong> 85%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Application Status
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Status:</strong> Pending</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Payment Information
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Total Fees:</strong> $1000</p>
+                        <p><strong>Amount Paid:</strong> $500</p>
+                        <p><strong>Payment Status:</strong> Partially Paid</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                Document Upload
+            </div>
+            <div class="card-body">
+                <p><strong>Upload Additional Documents:</strong> <input type="file" /></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

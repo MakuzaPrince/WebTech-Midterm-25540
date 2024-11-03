@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Search result</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f6f7f8;
+    }
+
+    /* Topbar Styles */
+    .topbar {
+      background-color: #b6c8d3;
+      color: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(238, 100, 100, 0.1);
+    }
+
+    .topbar .logo {
+      width: 60px;
+      height: auto;
+    }
+
+    .topbar a,
+    .topbar button {
+      color: inherit;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .topbar a:hover,
+    .topbar button:hover {
+      background-color: #5996d4;
+    }
+
+    /* Content Styles */
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    /* Notification Dropdown Styles */
+    .notification-dropdown {
+      position: absolute;
+      right: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      width: 300px;
+      display: none;
+    }
+
+    .dropdown-toggle {
+        background-color: #ffc107;
+        color: #000;
+        border: 1px solid #e9e8e5;
+    }
+    .notification-dropdown h6 {
+      margin-bottom: 10px;
+    }
+    
+    header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    .notification-count {
+      background-color: #dc3545;
+      color: #fff;
+      padding: 2px 5px;
+      border-radius: 50%;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+
+    /* Table Styles */
+    .user-table {
+      width: 100%;
+    }
+
+    .user-table thead th {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="d-flex">
+      <a th:href="@{/admin}" class="btn btn-danger ms-auto">Back</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <header class="d-flex justify-content-between align-items-center py-2">
+      <h3>Search result</h3>
+    </header>
+    <hr>
+
+    <div class="container mt-4">
+      <table class="table table-bordered table-striped user-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}" th:if="${user.username == 'prince'}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.role}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
